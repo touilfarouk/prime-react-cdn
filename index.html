@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Slider and DataTable Demo</title>
+
+    <!-- PrimeReact -->
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/primereact/resources/themes/lara-light-indigo/theme.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/primereact/resources/primereact.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/primeflex@3.2.1/primeflex.min.css"
+    />
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react-transition-group@4.4.2/dist/react-transition-group.js"></script>
+
+    <!-- Demo -->
+    <script src="https://unpkg.com/primereact/core/core.min.js"></script>
+    <script src="https://unpkg.com/primereact/primereact.all.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useEffect, useState } = React;
+      const { Slider, DataTable, Column } = primereact;
+
+      const SliderDemo = () => {
+        const [value, setValue] = useState(null);
+
+        return (
+          <div className="slider-demo">
+            <div className="card">
+              <h5>Slider Demo: {value}</h5>
+              <Slider value={value} onChange={(e) => setValue(e.value)} />
+            </div>
+          </div>
+        );
+      };
+
+      const DataTableDemo = () => {
+        const [cars, setCars] = useState([]);
+
+        useEffect(() => {
+          // Simulated data for demonstration
+          const simulatedCars = [
+            { vin: "Vin001", brand: "Toyota", year: 2022, color: "Blue" },
+            { vin: "Vin002", brand: "Ford", year: 2021, color: "Red" },
+            // Add more cars here...
+          ];
+          setCars(simulatedCars);
+        }, []);
+
+        const columns = [
+          { field: "vin", header: "Vin" },
+          { field: "brand", header: "Brand" },
+          { field: "year", header: "Year" },
+          { field: "color", header: "Color" },
+        ];
+
+        return (
+          <div className="datatable-demo">
+            <div className="card">
+              <h5>DataTable Demo</h5>
+              <DataTable value={cars} paginator rows={10}>
+                {columns.map((col) => (
+                  <Column
+                    key={col.field}
+                    field={col.field}
+                    header={col.header}
+                  />
+                ))}
+              </DataTable>
+            </div>
+          </div>
+        );
+      };
+
+      const rootElement = document.getElementById("root");
+      ReactDOM.render(
+        <>
+          <SliderDemo />
+          <DataTableDemo />
+        </>,
+        rootElement
+      );
+    </script>
+  </body>
+</html>
